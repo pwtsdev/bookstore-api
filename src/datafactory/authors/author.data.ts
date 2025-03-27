@@ -4,6 +4,6 @@ import { AuthorPayload } from '../../models/authors/authors.model';
 export function getRandomAuthorPayload(): AuthorPayload {
   return {
     firstName: getRandomFirstName(),
-    latName: getRandomLastName(),
+    lastName: getRandomLastName(),
   };
 }

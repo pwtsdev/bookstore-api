@@ -1,6 +1,6 @@
 export interface AuthorPayload {
   firstName: string;
-  latName: string;
+  lastName: string;
 }
 
 export interface AuthorResponse {
