@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { faker } from '@faker-js/faker';
 import test, { expect } from '@playwright/test';
+import { authorsUrl } from '../../src/helpers/url.helper';
 import { postRequest } from '../../src/requests/post.request';
 
 test.describe('POST /authors 2xx', { tag: ['@authors', '@smoke'] }, () => {
@@ -14,7 +15,7 @@ test.describe('POST /authors 2xx', { tag: ['@authors', '@smoke'] }, () => {
       lastName: LAST_NAME,
     };
 
-    const response = await postRequest('/authors', authorPayload);
+    const response = await postRequest(authorsUrl(), authorPayload);
     expect(response.status()).toBe(201);
 
     const responseBody = await response.json();
