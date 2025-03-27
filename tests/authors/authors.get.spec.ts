@@ -5,7 +5,7 @@ import test, { expect } from '@playwright/test';
 const EXPECTED_FIRST_NAME = 'Joshua';
 const EXPECTED_LAST_NAME = 'Bloch';
 
-test.describe('GET /authors', () => {
+test.describe('GET /authors 2xx', { tag: ['@authors', '@smoke'] }, () => {
   test('read all authors', async ({ request }) => {
     const response = await request.get('/authors');
     expect(response.status()).toBe(200);
