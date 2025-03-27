@@ -2,18 +2,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { faker } from '@faker-js/faker';
 import test, { expect } from '@playwright/test';
+import { postRequest } from '../../src/requests/post.request';
 
 test.describe('POST /authors 2xx', { tag: ['@authors', '@smoke'] }, () => {
-  test('create new author', async ({ request }) => {
+  test('create new author', async () => {
     const FIRST_NAME = faker.person.firstName();
     const LAST_NAME = faker.person.lastName();
 
-    const response = await request.post('/authors', {
-      data: {
-        firstName: FIRST_NAME,
-        lastName: LAST_NAME,
-      },
-    });
+    const authorPayload = {
+      firstName: FIRST_NAME,
+      lastName: LAST_NAME,
+    };
+
+    const response = await postRequest('/authors', authorPayload);
     expect(response.status()).toBe(201);
 
     const responseBody = await response.json();
