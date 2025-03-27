@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import test, { expect } from '@playwright/test';
+import { parseResponse } from '../../src/helpers/parse.response.helper';
 import { authorsUrl } from '../../src/helpers/url.helper';
+import { AuthorResponse } from '../../src/models/authors/authors.model';
 import { getRequest } from '../../src/requests/get.request';
 
 const EXPECTED_FIRST_NAME = 'Joshua';
@@ -12,7 +12,7 @@ test.describe('GET /authors 2xx', { tag: ['@authors', '@smoke'] }, () => {
     const response = await getRequest(authorsUrl());
     expect(response.status()).toBe(200);
 
-    const authors = await response.json();
+    const authors = await parseResponse<AuthorResponse[]>(response);
     expect(authors.length).toBeGreaterThanOrEqual(1);
   });
 
@@ -20,7 +20,7 @@ test.describe('GET /authors 2xx', { tag: ['@authors', '@smoke'] }, () => {
     const response = await getRequest(authorsUrl(1));
     expect(response.status()).toBe(200);
 
-    const author = await response.json();
+    const author = await parseResponse<AuthorResponse>(response);
     expect(author.firstName).toBe(EXPECTED_FIRST_NAME);
     expect(author.lastName).toBe(EXPECTED_LAST_NAME);
   });

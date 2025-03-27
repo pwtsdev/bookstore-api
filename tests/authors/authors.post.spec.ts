@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { faker } from '@faker-js/faker';
 import test, { expect } from '@playwright/test';
+import { parseResponse } from '../../src/helpers/parse.response.helper';
 import { authorsUrl } from '../../src/helpers/url.helper';
+import { AuthorResponse } from '../../src/models/authors/authors.model';
 import { postRequest } from '../../src/requests/post.request';
 
 test.describe('POST /authors 2xx', { tag: ['@authors', '@smoke'] }, () => {
@@ -18,7 +18,7 @@ test.describe('POST /authors 2xx', { tag: ['@authors', '@smoke'] }, () => {
     const response = await postRequest(authorsUrl(), authorPayload);
     expect(response.status()).toBe(201);
 
-    const responseBody = await response.json();
+    const responseBody = await parseResponse<AuthorResponse>(response);
     expect(responseBody.firstName).toBe(FIRST_NAME);
     expect(responseBody.lastName).toBe(LAST_NAME);
   });
