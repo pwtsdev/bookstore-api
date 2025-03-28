@@ -1,10 +1,10 @@
-import test, { expect } from '@playwright/test';
-import { HTTP_200_OK } from '../../src/const/http.status.codes.const';
-import { parseResponse } from '../../src/helpers/parse.response.helper';
-import { statusCode } from '../../src/helpers/response.status.helper';
-import { authorsUrl } from '../../src/helpers/url.helper';
-import { AuthorResponse } from '../../src/models/authors/authors.model';
-import { getRequest } from '../../src/requests/get.request';
+import { AuthorResponse } from '@api-models/authors/authors.model';
+import { HTTP_200_OK } from '@const/http.status.codes.const';
+import { expect, test } from '@fixtures/api.fixture';
+import { parseResponse } from '@helpers/parse.response.helper';
+import { statusCode } from '@helpers/response.status.helper';
+import { authorsUrl } from '@helpers/url.helper';
+import { getRequest } from '@requests/get.request';
 
 const EXPECTED_FIRST_NAME = 'Joshua';
 const EXPECTED_LAST_NAME = 'Bloch';

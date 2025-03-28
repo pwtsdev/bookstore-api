@@ -1,5 +1,5 @@
 import { APIResponse, request } from '@playwright/test';
-import { APIPayload } from '../models/payload.model';
+import { APIPayload } from '../api/models/payload.model';
 
 export async function postRequest(endpoint: string, payload: APIPayload): Promise<APIResponse> {
   const api = await request.newContext();

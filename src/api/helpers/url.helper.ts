@@ -1,4 +1,4 @@
-import { API_AUTHORS } from '../const/endpoints.const';
+import { API_AUTHORS } from '@const/endpoints.const';
 
 export function buildResourceUrl(endpoint: string, id?: number): string {
   return id ? `${endpoint}/${String(id)}` : endpoint;

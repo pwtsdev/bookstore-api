@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import test, { expect } from '@playwright/test';
+
+import { expect, test } from '@fixtures/api.fixture';
 
 const EXPECTED_FIRST_NAME = 'Joshua';
 const EXPECTED_LAST_NAME = 'Bloch';

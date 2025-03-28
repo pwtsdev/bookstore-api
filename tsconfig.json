@@ -8,6 +8,15 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "outDir": "../tests-out"
+    "outDir": "../tests-out",
+    "baseUrl": "./",
+    "paths": {
+      "@fixtures/*": ["src/api/fixtures/*"],
+      "@helpers/*": ["src/api/helpers/*"],
+      "@const/*": ["src/api/const/*"],
+      "@datafactory/*": ["src/api/datafactory/*"],
+      "@requests/*": ["src/api/requests/*"],
+      "@api-models/*": ["src/api/models/*"]
+    }
   }
 }
