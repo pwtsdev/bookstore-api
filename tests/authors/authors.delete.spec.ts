@@ -1,22 +1,17 @@
-import { AuthorResponse } from '@api-models/authors/authors.model';
 import { HTTP_204_NO_CONTENT, HTTP_404_NOT_FOUND } from '@const/http.status.codes.const';
-import { getRandomAuthorPayload } from '@datafactory/authors/author.data';
 import { expect, test } from '@fixtures/api.fixture';
-import { parseResponse } from '@helpers/parse.response.helper';
 import { statusCode } from '@helpers/response.status.helper';
 import { authorsUrl } from '@helpers/url.helper';
 import { deleteRequest } from '@requests/delete.request';
 import { getRequest } from '@requests/get.request';
-import { postRequest } from '@requests/post.request';
+import { createAuthorAPIStep } from 'src/api/steps/authors/create.author.step';
 
 test.describe('DELETE /authors 2xx', { tag: ['@authors', '@smoke'] }, () => {
   let authorId: number;
 
   test.beforeAll(async () => {
-    const authorPayload = getRandomAuthorPayload();
-    const response = await postRequest(authorsUrl(), authorPayload);
-    const responseBody = await parseResponse<AuthorResponse>(response);
-    authorId = responseBody.id;
+    const author = await createAuthorAPIStep();
+    authorId = author.id;
   });
 
   test('delete existing author', async () => {
