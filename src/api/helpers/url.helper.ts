@@ -1,6 +1,6 @@
 import { API_AUTHORS } from '@const/endpoints.const';
 
-type QueryParams = Record<string, string | number | boolean>;
+export type QueryParams = Record<string, string | number | boolean>;
 
 export function buildResourceUrl(endpoint: string, idOrParams?: number | QueryParams, params?: QueryParams): string {
   let url = endpoint;
