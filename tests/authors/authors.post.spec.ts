@@ -8,7 +8,7 @@ import { authorsUrl } from '@helpers/url.helper';
 import { postRequest } from '@requests/post.request';
 import { deleteAuthorAPIStep } from 'src/api/steps/authors/delete.author.step';
 
-test.describe('POST /authors 2xx', { tag: ['@authors', '@smoke', '@wip'] }, () => {
+test.describe('POST /authors 2xx', { tag: ['@authors', '@smoke'] }, () => {
   let authorId: number;
 
   test.afterEach(async () => {
