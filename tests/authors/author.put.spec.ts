@@ -23,21 +23,19 @@ test.describe('PUT /authors 2xx', { tag: ['@authors', '@smoke'] }, () => {
     if (authorId) await deleteAuthorAPIStep(authorId);
   });
 
-  test.describe('PUT /authors 2xx', { tag: ['@authors', '@smoke'] }, () => {
-    test('update existing author', async () => {
-      await test.step('update author', async () => {
-        updatedAuthorPayload = getRandomAuthorPayload();
-        const response = await putRequest(authorsUrl(authorId), updatedAuthorPayload);
-        expect(statusCode(response)).toBe(HTTP_200_OK);
+  test('update existing author', async () => {
+    await test.step('update author', async () => {
+      updatedAuthorPayload = getRandomAuthorPayload();
+      const response = await putRequest(authorsUrl(authorId), updatedAuthorPayload);
+      expect(statusCode(response)).toBe(HTTP_200_OK);
 
-        const responseBody = await parseResponse<AuthorPayload>(response);
-        expect(responseBody).toMatchObject(updatedAuthorPayload);
-      });
+      const responseBody = await parseResponse<AuthorPayload>(response);
+      expect(responseBody).toMatchObject(updatedAuthorPayload);
+    });
 
-      await test.step('verify author updated', async () => {
-        const response = await readAuthorByIdAPIStep(authorId);
-        expect(response).toMatchObject(updatedAuthorPayload);
-      });
+    await test.step('verify author updated', async () => {
+      const response = await readAuthorByIdAPIStep(authorId);
+      expect(response).toMatchObject(updatedAuthorPayload);
     });
   });
 });
