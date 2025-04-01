@@ -1,4 +1,4 @@
-import { BookResponse } from '@api-models/books/books.model';
+import { BookResponse } from '@api-models/books/book.model';
 import { HTTP_200_OK } from '@const/http.status.codes.const';
 import { expect, test } from '@fixtures/api.fixture';
 import { parseResponse } from '@helpers/parse.response.helper';

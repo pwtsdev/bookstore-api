@@ -1,4 +1,4 @@
-import { AuthorPayload } from '@api-models/authors/authors.model';
+import { AuthorPayload } from '@api-models/authors/author.model';
 import { HTTP_200_OK } from '@const/http.status.codes.const';
 import { getRandomAuthorPayload } from '@datafactory/authors/author.data';
 import { expect, test } from '@fixtures/api.fixture';

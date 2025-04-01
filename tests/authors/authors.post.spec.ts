@@ -1,4 +1,4 @@
-import { AuthorResponse } from '@api-models/authors/authors.model';
+import { AuthorResponse } from '@api-models/authors/author.model';
 import { HTTP_201_CREATED } from '@const/http.status.codes.const';
 import { MAX_LENGTH, MIN_LENGTH } from '@const/validation.const';
 import { getRandomAuthorPayload } from '@datafactory/authors/author.data';

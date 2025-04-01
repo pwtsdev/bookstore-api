@@ -4,7 +4,7 @@
 //   [key: string]: unknown;
 // }
 
-import { AuthorResponse } from '@api-models/authors/authors.model';
+import { AuthorResponse } from '@api-models/authors/author.model';
 
 export interface BookResponse {
   id: number;

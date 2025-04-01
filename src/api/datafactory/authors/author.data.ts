@@ -1,4 +1,4 @@
-import { AuthorPayload } from '@api-models/authors/authors.model';
+import { AuthorPayload } from '@api-models/authors/author.model';
 import { getRandomFirstName, getRandomLastName } from '@helpers/random.data.helper';
 
 type Override<T> = Partial<T>;

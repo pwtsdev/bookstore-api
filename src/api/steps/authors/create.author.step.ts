@@ -1,4 +1,4 @@
-import { AuthorPayload, AuthorResponse } from '@api-models/authors/authors.model';
+import { AuthorPayload, AuthorResponse } from '@api-models/authors/author.model';
 import { HTTP_201_CREATED } from '@const/http.status.codes.const';
 import { getRandomAuthorPayload } from '@datafactory/authors/author.data';
 import { parseResponse } from '@helpers/parse.response.helper';

@@ -1,3 +1,3 @@
-import { AuthorPayload } from './authors/authors.model';
+import { AuthorPayload } from './authors/author.model';
 
 export type APIPayload = AuthorPayload;

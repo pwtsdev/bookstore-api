@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { AuthorResponse } from '@api-models/authors/authors.model';
+import { AuthorResponse } from '@api-models/authors/author.model';
 import { HTTP_200_OK } from '@const/http.status.codes.const';
 import { MAX_LENGTH, MIN_LENGTH } from '@const/validation.const';
 import { expect, test } from '@fixtures/api.fixture';

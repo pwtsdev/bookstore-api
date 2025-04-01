@@ -1,4 +1,4 @@
-import { AuthorPayload } from '@api-models/authors/authors.model';
+import { AuthorPayload } from '@api-models/authors/author.model';
 import { ErrorResponse } from '@api-models/response.error.model';
 import { BAD_REQUEST } from '@const/http.messages.const';
 import { HTTP_400_BAD_REQUEST } from '@const/http.status.codes.const';

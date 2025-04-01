@@ -1,4 +1,4 @@
-import { AuthorPayload, AuthorResponse } from '@api-models/authors/authors.model';
+import { AuthorPayload, AuthorResponse } from '@api-models/authors/author.model';
 import { HTTP_200_OK } from '@const/http.status.codes.const';
 import { expect, test } from '@fixtures/api.fixture';
 import { parseResponse } from '@helpers/parse.response.helper';
