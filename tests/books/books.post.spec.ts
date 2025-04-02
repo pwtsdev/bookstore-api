@@ -1,9 +1,9 @@
 import { AuthorResponse } from '@api-models/authors/author.model';
 import { BookPayload, BookResponse } from '@api-models/books/book.model';
 import { HTTP_201_CREATED } from '@const/http.status.codes.const';
+import { getRandomBookPayload } from '@datafactory/books/book.data';
 import { expect, test } from '@fixtures/api.fixture';
 import { parseResponse } from '@helpers/parse.response.helper';
-import { getRandomBookTitle } from '@helpers/random.data.helper';
 import { statusCode } from '@helpers/response.status.helper';
 import { booksUrl } from '@helpers/url.helper';
 import { postRequest } from '@requests/post.request';
@@ -18,13 +18,7 @@ test.describe('POST /books 2xx', { tag: ['@books', '@smoke'] }, () => {
     author = await createAuthorAPIStep();
     authorId = author.id;
 
-    bookPayload = {
-      title: getRandomBookTitle(),
-      authors: [authorId],
-      year: 2022,
-      price: 49.99,
-      available: 100,
-    };
+    bookPayload = getRandomBookPayload(authorId);
   });
 
   // test.afterEach(async () => {
