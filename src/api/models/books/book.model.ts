@@ -1,10 +1,13 @@
-// export interface BookPayload {
-//   firstName: string;
-//   lastName: string;
-//   [key: string]: unknown;
-// }
-
 import { AuthorResponse } from '@api-models/authors/author.model';
+
+export interface BookPayload {
+  title: string;
+  authors: number[];
+  year: number;
+  price: number;
+  available: number;
+  [key: string]: unknown;
+}
 
 export interface BookResponse {
   id: number;

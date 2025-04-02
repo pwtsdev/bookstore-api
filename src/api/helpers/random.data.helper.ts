@@ -7,3 +7,7 @@ export function getRandomFirstName(): string {
 export function getRandomLastName(): string {
   return faker.person.lastName().replaceAll("'", '');
 }
+
+export function getRandomBookTitle(): string {
+  return faker.lorem.words(3);
+}
