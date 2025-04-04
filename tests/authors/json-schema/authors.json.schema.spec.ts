@@ -39,7 +39,7 @@ test.describe('Validate JSON Schema', { tag: ['@authors', '@smoke', '@schema'] }
     const response = await getRequest(authorsUrl());
     expect(statusCode(response)).toBe(HTTP_200_OK);
 
-    const responseBody = await parseResponse<AuthorResponse>(response);
+    const responseBody = await parseResponse<AuthorResponse[]>(response);
     const validate = ajv.compile(authorsSchema);
     const isValid = validate(responseBody);
 
