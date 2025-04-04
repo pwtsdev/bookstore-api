@@ -4,7 +4,7 @@ export const NON_EXISTING_ID = 99999999;
 export const INVALID_TYPE_ID = '10abc10';
 
 // BOOKS
-export const NIM_YEAR = 1900;
+export const MIN_YEAR = 1900;
 export const MAX_PRICE = 1000;
 export const MIN_PRICE = 1;
 export const MAX_AVAILABLE = 10000;

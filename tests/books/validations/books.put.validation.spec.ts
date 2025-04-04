@@ -11,7 +11,7 @@ import {
   TITLE_INCORRECT_DATA,
   YEAR_INCORRECT_DATA,
 } from '@const/response.errors.const';
-import { MAX_AVAILABLE, MIN_AVAILABLE, MIN_PRICE, NON_EXISTING_ID } from '@const/validation.const';
+import { MAX_AVAILABLE, MIN_AVAILABLE, MIN_PRICE, MIN_YEAR, NON_EXISTING_ID } from '@const/validation.const';
 import { getRandomBookOverridePayload, getRandomBookPayload } from '@datafactory/books/book.data';
 import { expect, test } from '@fixtures/api.fixture';
 import { parseResponse } from '@helpers/parse.response.helper';
@@ -27,7 +27,7 @@ const invalidBookPayload = [
     errorMessage: AUTHORS_INCORRECT_DATA,
   },
   {
-    bookPayload: (id: number): BookPayload => getRandomBookOverridePayload({ authors: [id], year: 1899 }),
+    bookPayload: (id: number): BookPayload => getRandomBookOverridePayload({ authors: [id], year: MIN_YEAR - 1 }),
     description: 'year before 1900',
     errorMessage: YEAR_INCORRECT_DATA,
   },
