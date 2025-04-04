@@ -1,17 +1,18 @@
 import { AuthorResponse } from '@api-models/authors/author.model';
 import { BookPayload } from '@api-models/books/book.model';
 import { ErrorResponse } from '@api-models/response.error.model';
-import { HTTP_400_BAD_REQUEST } from '@const/http.status.codes.const';
+import { HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_409_CONFLICT } from '@const/http.status.codes.const';
 import {
   AUTHORS_INCORRECT_DATA,
   AVAILABLE_INCORRECT_DATA,
+  CAN_NOT_FIND_AUTHOR_ERROR,
   MAX_AVAILABLE_ERROR,
   MIN_AVAILABLE_ERROR,
   PRICE_INCORRECT_DATA,
   TITLE_INCORRECT_DATA,
   YEAR_INCORRECT_DATA,
 } from '@const/response.errors.const';
-import { MAX_AVAILABLE, MAX_PRICE, MIN_AVAILABLE, MIN_PRICE } from '@const/validation.const';
+import { MAX_AVAILABLE, MAX_PRICE, MIN_AVAILABLE, MIN_PRICE, NON_EXISTING_ID } from '@const/validation.const';
 import { getRandomBookPayload } from '@datafactory/books/book.data';
 import { expect, test } from '@fixtures/api.fixture';
 import { parseResponse } from '@helpers/parse.response.helper';
@@ -113,5 +114,23 @@ test.describe('POST /books 4xx', { tag: ['@books', '@validation', '@4xx'] }, () 
 
     const responseBody = await parseResponse<ErrorResponse>(response);
     expect(responseBody.message).toContain(MIN_AVAILABLE_ERROR);
+  });
+
+  test('author id does not exist', async () => {
+    randomBookPayload.authors = [NON_EXISTING_ID];
+
+    const response = await postRequest(booksUrl(), randomBookPayload);
+    expect(statusCode(response)).toBe(HTTP_400_BAD_REQUEST);
+
+    const responseBody = await parseResponse<ErrorResponse>(response);
+    expect(responseBody.message).toContain(`${CAN_NOT_FIND_AUTHOR_ERROR} ${String(NON_EXISTING_ID)}`);
+  });
+
+  test('book with given title already exist', async () => {
+    const responseOne = await postRequest(booksUrl(), randomBookPayload);
+    expect(statusCode(responseOne)).toBe(HTTP_201_CREATED);
+
+    const responseTwo = await postRequest(booksUrl(), randomBookPayload);
+    expect(statusCode(responseTwo)).toBe(HTTP_409_CONFLICT);
   });
 });
