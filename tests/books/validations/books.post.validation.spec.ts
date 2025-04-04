@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { AuthorResponse } from '@api-models/authors/author.model';
 import { BookPayload } from '@api-models/books/book.model';
 import { ErrorResponse } from '@api-models/response.error.model';
@@ -13,13 +14,53 @@ import {
   YEAR_INCORRECT_DATA,
 } from '@const/response.errors.const';
 import { MAX_AVAILABLE, MAX_PRICE, MIN_AVAILABLE, MIN_PRICE, NON_EXISTING_ID } from '@const/validation.const';
-import { getRandomBookPayload } from '@datafactory/books/book.data';
+import { getRandomBookOverridePayload, getRandomBookPayload } from '@datafactory/books/book.data';
 import { expect, test } from '@fixtures/api.fixture';
 import { parseResponse } from '@helpers/parse.response.helper';
 import { statusCode } from '@helpers/response.status.helper';
 import { booksUrl } from '@helpers/url.helper';
 import { postRequest } from '@requests/post.request';
 import { createAuthorAPIStep } from 'src/api/steps/authors/create.author.step';
+
+const invalidBookPayload = [
+  {
+    bookPayload: (_: number): BookPayload => getRandomBookPayload(),
+    description: 'empty authors',
+    errorMessage: AUTHORS_INCORRECT_DATA,
+  },
+  {
+    bookPayload: (id: number): BookPayload => getRandomBookOverridePayload({ authors: [id], year: 1899 }),
+    description: 'year before 1900',
+    errorMessage: YEAR_INCORRECT_DATA,
+  },
+  {
+    bookPayload: (id: number): BookPayload => getRandomBookOverridePayload({ authors: [id], price: MAX_PRICE + 1 }),
+    description: 'above max price',
+    errorMessage: PRICE_INCORRECT_DATA,
+  },
+  // {
+  //   bookPayload: (id: number): BookPayload => getRandomBookOverridePayload({ authors: [id], price: MIN_PRICE - 0.5 }),
+  //   description: 'below min price',
+  //   errorMessage: PRICE_INCORRECT_DATA,
+  // },
+  {
+    bookPayload: (id: number): BookPayload =>
+      getRandomBookOverridePayload({ authors: [id], available: MAX_AVAILABLE + 1 }),
+    description: 'above max available',
+    errorMessage: MAX_AVAILABLE_ERROR,
+  },
+  {
+    bookPayload: (id: number): BookPayload =>
+      getRandomBookOverridePayload({ authors: [id], available: MIN_AVAILABLE - 0.5 }),
+    description: 'below min available',
+    errorMessage: MIN_AVAILABLE_ERROR,
+  },
+  {
+    bookPayload: (_: number): BookPayload => getRandomBookOverridePayload({ authors: [NON_EXISTING_ID] }),
+    description: 'author id does not exist',
+    errorMessage: `${CAN_NOT_FIND_AUTHOR_ERROR} ${String(NON_EXISTING_ID)}`,
+  },
+];
 
 test.describe('POST /books 4xx', { tag: ['@books', '@validation', '@4xx'] }, () => {
   let existingAuthor: AuthorResponse;
@@ -32,11 +73,6 @@ test.describe('POST /books 4xx', { tag: ['@books', '@validation', '@4xx'] }, () 
 
     randomBookPayload = getRandomBookPayload(authorId);
   });
-
-  // test.afterEach(async () => {
-  //   if (bookId) await deleteBookAPIStep(bookId);
-  //   if (authorId) await deleteAuthorAPIStep(authorId);
-  // });
 
   test('empty json', async () => {
     const response = await postRequest(booksUrl(), {} as BookPayload);
@@ -57,33 +93,14 @@ test.describe('POST /books 4xx', { tag: ['@books', '@validation', '@4xx'] }, () 
     });
   });
 
-  test('empty authors', async () => {
-    const bookPayload = getRandomBookPayload();
-    const response = await postRequest(booksUrl(), bookPayload);
-    expect(statusCode(response)).toBe(HTTP_400_BAD_REQUEST);
+  invalidBookPayload.forEach(({ bookPayload, description, errorMessage }) => {
+    test(`book: ${description}`, async () => {
+      const response = await postRequest(booksUrl(), bookPayload(authorId));
+      expect(statusCode(response)).toBe(HTTP_400_BAD_REQUEST);
 
-    const responseBody = await parseResponse<ErrorResponse>(response);
-    expect(responseBody.message).toContain(AUTHORS_INCORRECT_DATA);
-  });
-
-  test('year before 1900', async () => {
-    randomBookPayload.year = 1899;
-
-    const response = await postRequest(booksUrl(), randomBookPayload);
-    expect(statusCode(response)).toBe(HTTP_400_BAD_REQUEST);
-
-    const responseBody = await parseResponse<ErrorResponse>(response);
-    expect(responseBody.message).toContain(YEAR_INCORRECT_DATA);
-  });
-
-  test('above max price', async () => {
-    randomBookPayload.price = MAX_PRICE + 1;
-
-    const response = await postRequest(booksUrl(), randomBookPayload);
-    expect(statusCode(response)).toBe(HTTP_400_BAD_REQUEST);
-
-    const responseBody = await parseResponse<ErrorResponse>(response);
-    expect(responseBody.message).toContain(PRICE_INCORRECT_DATA);
+      const responseBody = await parseResponse<ErrorResponse>(response);
+      expect(responseBody.message).toContain(errorMessage);
+    });
   });
 
   test.fixme('below min price', async () => {
@@ -94,36 +111,6 @@ test.describe('POST /books 4xx', { tag: ['@books', '@validation', '@4xx'] }, () 
 
     const responseBody = await parseResponse<ErrorResponse>(response);
     expect(responseBody.message).toContain(PRICE_INCORRECT_DATA);
-  });
-
-  test('above max available', async () => {
-    randomBookPayload.available = MAX_AVAILABLE + 1;
-
-    const response = await postRequest(booksUrl(), randomBookPayload);
-    expect(statusCode(response)).toBe(HTTP_400_BAD_REQUEST);
-
-    const responseBody = await parseResponse<ErrorResponse>(response);
-    expect(responseBody.message).toContain(MAX_AVAILABLE_ERROR);
-  });
-
-  test('below min available', async () => {
-    randomBookPayload.available = MIN_AVAILABLE - 0.5;
-
-    const response = await postRequest(booksUrl(), randomBookPayload);
-    expect(statusCode(response)).toBe(HTTP_400_BAD_REQUEST);
-
-    const responseBody = await parseResponse<ErrorResponse>(response);
-    expect(responseBody.message).toContain(MIN_AVAILABLE_ERROR);
-  });
-
-  test('author id does not exist', async () => {
-    randomBookPayload.authors = [NON_EXISTING_ID];
-
-    const response = await postRequest(booksUrl(), randomBookPayload);
-    expect(statusCode(response)).toBe(HTTP_400_BAD_REQUEST);
-
-    const responseBody = await parseResponse<ErrorResponse>(response);
-    expect(responseBody.message).toContain(`${CAN_NOT_FIND_AUTHOR_ERROR} ${String(NON_EXISTING_ID)}`);
   });
 
   test('book with given title already exist', async () => {
