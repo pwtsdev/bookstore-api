@@ -1,4 +1,4 @@
-import { API_AUTHORS, API_BOOKS } from '@const/endpoints.const';
+import { API_AUTHORS, API_BOOKS, API_COVER } from '@const/endpoints.const';
 
 export type QueryParams = Record<string, string | number | boolean>;
 
@@ -26,4 +26,8 @@ export function authorsUrl(idOrParams?: number | QueryParams, params?: QueryPara
 
 export function booksUrl(idOrParams?: number | QueryParams, params?: QueryParams): string {
   return buildResourceUrl(API_BOOKS, idOrParams, params);
+}
+
+export function booksCoverUrl(id: number): string {
+  return buildResourceUrl(API_BOOKS, id) + API_COVER;
 }
