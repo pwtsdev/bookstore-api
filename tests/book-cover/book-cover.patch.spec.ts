@@ -5,7 +5,7 @@ import { getHeadersWithToken } from '@helpers/auth.helper';
 import { getFormDataWithBookCover } from '@helpers/form.data.helper';
 import { statusCode } from '@helpers/response.status.helper';
 import { booksCoverUrl } from '@helpers/url.helper';
-import { patchMultiFormRequest } from '@requests/patch.request';
+import { patchRequest } from '@requests/patch.request';
 import { deleteAuthorAPIStep } from 'src/api/steps/authors/delete.author.step';
 import { createBookAPIStep } from 'src/api/steps/books/create.book.step';
 import { deleteBookAPIStep } from 'src/api/steps/books/delete.book.step';
@@ -34,7 +34,7 @@ test.describe('PATCH /books/:id/cover 2xx', { tag: ['@book-cover', '@slow'] }, (
     const formData = getFormDataWithBookCover();
     const headers = getHeadersWithToken(adminToken);
 
-    const response = await patchMultiFormRequest(booksCoverUrl(bookId), formData, headers);
+    const response = await patchRequest(booksCoverUrl(bookId), formData, headers);
 
     expect(statusCode(response)).toBe(HTTP_202_ACCEPTED);
   });
