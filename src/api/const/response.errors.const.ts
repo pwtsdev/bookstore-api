@@ -12,6 +12,10 @@ export const MAX_AVAILABLE_ERROR = 'available must be less than or equal to 1000
 export const MIN_AVAILABLE_ERROR = 'available must be greater than or equal to 1';
 export const CAN_NOT_FIND_AUTHOR_ERROR = 'Can not find author with given id:';
 export const OPERATION_CAN_NOT_BE_PERFORMED = 'operation could not be performed';
+export const CAN_NOT_FIND_BOOK_ERROR = 'Can not find book with given id: 99999999';
+
+// ORDER ITEM
+export const ORDER_ITEM_BOOK_ID_INCORRECT_DATA = 'items[0].bookId incorrect input data';
 
 // ORDER RECIPIENT
 export const ORDER_RECIPIENT_NAME_INCORRECT_DATA = 'recipient.name incorrect input data';
