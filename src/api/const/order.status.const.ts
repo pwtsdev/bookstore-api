@@ -1,0 +1,5 @@
+export const ORDER_STATUS_NEW = 'NEW';
+export const ORDER_STATUS_PAID = 'PAID';
+export const ORDER_STATUS_CANCELED = 'CANCELED';
+export const ORDER_STATUS_ABANDONED = 'ABANDONED';
+export const ORDER_STATUS_SHIPPED = 'SHIPPED';
