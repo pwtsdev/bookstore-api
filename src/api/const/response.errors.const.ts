@@ -16,6 +16,8 @@ export const CAN_NOT_FIND_BOOK_ERROR = 'Can not find book with given id: 9999999
 
 // ORDER ITEM
 export const ORDER_ITEM_BOOK_ID_INCORRECT_DATA = 'items[0].bookId incorrect input data';
+export const ORDER_ITEM_QUANTITY_INCORRECT_DATA = 'items[0].quantity incorrect input data';
+export const ORDER_ITEM_QUANTITY_TO_MANY_COPIES_REQUESTED = 'to many copies of book requested: 1001 of 1000 available';
 
 // ORDER RECIPIENT
 export const ORDER_RECIPIENT_NAME_INCORRECT_DATA = 'recipient.name incorrect input data';
