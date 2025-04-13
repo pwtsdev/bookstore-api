@@ -8,6 +8,12 @@ export function getRandomLastName(): string {
   return faker.person.lastName().replaceAll("'", '');
 }
 
+export function getRandomFullName(): string {
+  const firstName = getRandomFirstName();
+  const lastName = getRandomLastName();
+  return `${firstName} ${lastName}`;
+}
+
 export function getRandomBookTitle(): string {
   return faker.lorem.words(3);
 }

@@ -7,6 +7,8 @@ import {
   getRandomZipCode,
 } from '@helpers/random.data.helper';
 
+type Override<T> = Partial<T>;
+
 export function getRandomRecipientPayload(): RecipientPayload {
   const randomFirstName = getRandomFirstName();
   const randomLastName = getRandomFirstName();
@@ -22,5 +24,12 @@ export function getRandomRecipientPayload(): RecipientPayload {
     city: randomCity,
     zipCode: randomZipCode,
     email: randomEmail,
+  };
+}
+
+export function getRandomRecipientOverridePayload(overrides: Override<RecipientPayload>): RecipientPayload {
+  return {
+    ...getRandomRecipientPayload(),
+    ...overrides,
   };
 }
